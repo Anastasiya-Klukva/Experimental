@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -70,13 +71,61 @@ public class Main {
 //        }
         }
     }
+
+    public List<String> readFile(String filePath) {
+        Path path = Paths.get(filePath);
+        List<String> rows = new ArrayList<>();
+        try {
+            rows = Files.lines(path).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String row: rows) {
+            System.out.println(row);
+        }
+        return rows;
+    }
+
+    public int countFoldersQuantity(List<String> rows) {
+        int quantity = 0;
+        for (String row : rows) {
+            if (!row.contains(".")) {
+                quantity++;
+            }
+        }
+        return quantity;
+    }
+    public int countFilesQuantity(List<String> rows) {
+        int quantity = 0;
+        for (String row : rows) {
+            if (row.contains(".")) {
+                quantity++;
+            }
+        }
+        return quantity;
+    }
+
+
+    public List<String> filterFiles(List<String> rows) {
+        List<String> results = new ArrayList<>();
+
+
+        return results;
+    }
+
     public static void main(String[] args) throws IOException {
 //        (new Main()).printFile(args[0], "");
 //        System.out.println();
 
         Main main = new Main();
-        List<String> rows = main.readFileStructure(args[0], "");
-        main.printToFile(rows, "C:\\Users\\kluko\\TestFolder\\petrova.txt");
+//        List<String> rows = main.readFileStructure(args[0], "");
+//        main.printToFile(rows, "C:\\Users\\kluko\\TestFolder\\petrova.txt");
+        List<String> rows = main.readFile("C:\\Users\\kluko\\TestFolder\\petrova.txt");
+        int foldersQuantity = main.countFoldersQuantity(rows);
+        int filesQuantity = main.countFilesQuantity(rows);
+        System.out.println("Files quantity is : " + filesQuantity);
+        System.out.println("Folders quantity is : " + foldersQuantity);
+
 
         System.out.println();
 
